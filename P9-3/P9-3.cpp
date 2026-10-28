@@ -2,7 +2,8 @@
 #include <string>
 using namespace std;
 
-int romanCharValue(char r){
+int romanCharValue(char r)
+{
     switch (r)
     {
     case 'I': return 1;
@@ -16,12 +17,38 @@ int romanCharValue(char r){
     }
 }
 
+int convertRomanToInt(string s)
+{
+    int total = 0;
 
-int main(){
-    cout << romanCharValue('M') << endl; // 1000
-    cout << romanCharValue('X') << endl; // 10
-    cout << romanCharValue('I') << endl; // 1
+    while (!s.empty())
+    {
+        if (s.length() == 1 ||
+            romanCharValue(s[0]) >= romanCharValue(s[1]))
+        {
+            total += romanCharValue(s[0]);
+            s.erase(0, 1);  // remove first character
+        }
+        else
+        {
+            total += romanCharValue(s[1]) - romanCharValue(s[0]);
+            s.erase(0, 2);  // remove first two characters
+        }
+    }
+
+    return total;
+}
+
+int main()
+{
+    cout << "MCMLXXVIII = "
+        << convertRomanToInt("MCMLXXVIII") << endl; // 1978
+
+    cout << "IV = "
+        << convertRomanToInt("IV") << endl; // 4
+
+    cout << "MCMXC = "
+        << convertRomanToInt("MCMXC") << endl; // 1990
 
     return 0;
 }
-
